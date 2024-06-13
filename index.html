@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        .btnn {
+            margin-top: 30px;
+            border: 3px solid rgba(0, 0, 0, 0.444);
+            font-size: 2rem;
+            height: 60px;
+            width: 15rem;
+            text-align: center;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Center text inside button */
+            transition: 0.6s;
+        }
+
+        .btnn:hover {
+            background-color: rgb(236, 184, 165);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center content horizontally */
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-5 {
+            margin-top: 5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 4rem;
+        }
+
+        .title {
+            font-size: 5rem;
+        }
+
+        .clock {
+            font-size: 200px;
+        }
+
+        .container_block {
+            height: 100vh;
+            /* Full viewport height */
+            justify-content: center;
+            /* Center content vertically */
+            font-family: "Fredoka", sans-serif;
+        }
+
+        @keyframes transittion {}
+    </style>
+</head>
+
+<body>
+    <div class="container container_block">
+        <div class="text-center mt-5">
+            <h1 class="mb-4 title">んなん's timer</h1>
+            <div style="font-size: 200px;color: coral; font-weight: bold;" id="clock" class="clock"></div>
+        </div>
+        <div onclick="">
+            <button class="btnn" id="setTime">Set my timer</button>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call to display clock immediately
+
+        var acction = document.getElementById('setTime').addEventListener('click', function () {
+            window.location.href = 'feature/setNewTime.html';
+        });
+    </script>
+    <script>
+        function setTime() {
+
+        }
+    </script>
+</body>
+
+</html>
