@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer</title>
+    <title>んあん's Timer</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/imgs/image.png">
     <style>
+        body::-webkit-scrollbar {
+            display: none;
+            /* cho Chrome, Safari, and Opera */
+        }
+
         .btnn {
-            margin-top: 30px;
+            margin-top: 30px, ;
             border: 3px solid rgba(0, 0, 0, 0.444);
             font-size: 2rem;
             height: 60px;
@@ -30,6 +36,7 @@
         }
 
         .container {
+
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -64,21 +71,49 @@
             font-family: "Fredoka", sans-serif;
         }
 
+        .wrapped-section {
+            /* border: 2px solid black; */
+            /* Border color and thickness */
+            padding: 20px;
+            /* Padding inside the border */
+            margin: 10px;
+            /* Margin outside the border */
+            border-radius: 10px;
+            /* Rounded corners */
+            text-align: center;
+            /* Center align text and buttons */
+        }
+
+        .btnn {
+            display: inline-block;
+            /* Ensure button doesn't take full width */
+            margin-top: 20px;
+            /* Space above the button */
+            padding: 10px 20px;
+            /* Padding inside the button */
+            font-size: 16px;
+            /* Font size of the button */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+        }
+
         @keyframes transittion {}
     </style>
 </head>
 
 <body>
-    <div class="container container_block">
-        <div class="text-center mt-5">
-            <h1 class="mb-4 title">んなん's timer</h1>
-            <div style="font-size: 200px;color: coral; font-weight: bold;" id="clock" class="clock"></div>
+    <div class="container-fluid container_block">
+        <div class="wrapped-section" style="margin-bottom: 0px;">
+            <div class="text-center mt-5">
+                <h1 class="mb-4 title">んなん's timer</h1>
+                <div style="font-size: 200px;color: coral; font-weight: bold;" id="clock" class="clock"></div>
+            </div>
+            <div onclick="">
+                <button class="btnn" id="setTime">Set my timer</button>
+            </div>
         </div>
-        <div onclick="">
-            <button class="btnn" id="setTime">Set my timer</button>
-        </div>
-
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
