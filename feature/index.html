@@ -12,6 +12,132 @@
     <link rel="icon" type="image/x-icon" href="/imgs/image.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="/feature/styles.css">
+    <style>
+        .btnn {
+            margin-top: 30px;
+            border: 3px solid rgba(0, 0, 0, 0.444);
+            font-size: 1.5rem;
+            height: 50px;
+            width: 12rem;
+            border-radius: 25px;
+            transition: 0.6s;
+        }
+
+        .btnn:hover {
+            background-color: rgb(236, 184, 165);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mt-5 {
+            margin-top: 5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 4rem;
+        }
+
+        .title {
+            font-size: 3rem;
+        }
+
+        .clock {
+            font-size: 100px;
+        }
+
+        .container_block {
+            height: 100vh;
+            justify-content: center;
+            font-family: "Fredoka", sans-serif;
+            text-align: center;
+        }
+
+        .start-timer {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pop_up {
+            border: 2px solid rgba(255, 153, 0, 0.418);
+            opacity: 0.8;
+            position: fixed;
+            z-index: 1000;
+            top: 20px;
+            right: 50px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #alarm-icon {
+            cursor: pointer;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        #alarm-popup {
+            position: fixed;
+            top: 30%;
+            right: 5%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1001;
+        }
+
+        #custom-time-inputs {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #custom-time-inputs input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        #custom-time-inputs input:last-child {
+            margin-right: 0;
+        }
+
+        @media (max-width: 767px) {
+            .btnn {
+                font-size: 1rem;
+                height: 40px;
+                width: 10rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .clock {
+                font-size: 50px;
+            }
+
+            #custom-time-inputs {
+                flex-direction: column;
+            }
+
+            #custom-time-inputs input {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            #custom-time-inputs input:last-child {
+                margin-bottom: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -64,7 +190,88 @@
     </div>
 
     <audio id="alarm-sound" preload="auto"></audio>
-    <script src="/feature/func.js"></script>
+    <script>
+        let countdownInterval;
+
+        document.getElementById('preset-times').addEventListener('change', function () {
+            const customInputs = document.getElementById('custom-time-inputs');
+            if (this.value === 'custom') {
+                customInputs.classList.remove('hidden');
+            } else {
+                customInputs.classList.add('hidden');
+            }
+            clearInterval(countdownInterval);
+            document.getElementById('clock').textContent = "00:00";
+        });
+
+        document.getElementById('alarm-icon').addEventListener('click', function () {
+            const alarmPopup = document.getElementById('alarm-popup');
+            alarmPopup.classList.toggle('hidden');
+        });
+
+        function startCountdown(duration, display, alarmSound, stopButton) {
+            let timer = duration, minutes, seconds;
+            countdownInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = "00:00";
+                    alarmSound.play();
+                    stopButton.classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            setTimeout(() => errorMessage.classList.add('hidden'), 3000);
+        }
+
+        document.getElementById('start-timer').addEventListener('click', () => {
+            const presetTimes = document.getElementById('preset-times').value;
+            const alarmSoundSrc = document.getElementById('alarm-sounds').value;
+            let totalSeconds;
+
+            if (presetTimes === 'custom') {
+                const hours = parseInt(document.getElementById('custom-hours').value, 10) || 0;
+                const minutes = parseInt(document.getElementById('custom-minutes').value, 10) || 0;
+                const seconds = parseInt(document.getElementById('custom-seconds').value, 10) || 0;
+                if (isNaN(hours) || isNaN(minutes) || isNaN(seconds) || hours < 0 || minutes < 0 || seconds < 0 || (hours === 0 && minutes === 0 && seconds === 0)) {
+                    showError("Invalid custom time input. Please enter valid hours, minutes, and seconds.");
+                    return;
+                }
+                totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            } else {
+                totalSeconds = parseInt(presetTimes, 10);
+            }
+
+            const display = document.getElementById('clock');
+            const alarmSound = document.getElementById('alarm-sound');
+            const stopButton = document.getElementById('stop-alarm');
+
+            alarmSound.src = alarmSoundSrc;
+            stopButton.classList.add('hidden');
+
+            clearInterval(countdownInterval);
+            startCountdown(totalSeconds, display, alarmSound, stopButton);
+        });
+
+        document.getElementById('stop-alarm').addEventListener('click', () => {
+            const alarmSound = document.getElementById('alarm-sound');
+            alarmSound.pause();
+            alarmSound.currentTime = 0;
+            document.getElementById('stop-alarm').classList.add('hidden');
+        });
+    </script>
 </body>
 
 </html>
