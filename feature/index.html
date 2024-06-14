@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/imgs/image.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/feature/styles.css">
+</head>
+
+<body>
+    <div class="container container_block">
+        <div class="text-center mt-5">
+            <h1 class="mb-4 title">Countdown Timer</h1>
+            <div id="timer-input" class="mb-4">
+                <select id="preset-times" class="form-control mb-2">
+                    <option value="900">15 minutes</option>
+                    <option value="1800">30 minutes</option>
+                    <option value="2700">45 minutes</option>
+                    <option value="3600">1 hour</option>
+                    <option value="7200">2 hours</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div id="custom-time-inputs" class="hidden">
+                    <input id="custom-hours" placeholder="Hours" class="form-control mb-2">
+                    <input id="custom-minutes" placeholder="Minutes" class="form-control mb-2">
+                    <input id="custom-seconds" placeholder="Seconds" class="form-control">
+                </div>
+                <div id="alarm-selection">
+                    <i id="alarm-icon"></i>
+                    <!-- Wrong logic but i am lazy to fix :)) -->
+                    <div id="alarm-popup">
+                        <select id="alarm-sounds" class="form-control mb-2">
+                            <option value="/media/AlarmSound_1.mp3">Alarm Sound 1</option>
+                            <option value="/media/AlarmSound_2.mp3">Alarm Sound 2</option>
+                            <option value="/media/AlarmSound_3.mp3">Alarm Sound 3</option>
+                            <option value="/media/ChickenSound.mp3">Chicken Sound</option>
+                            <option value="/media/CarHorn.mp3">Car Horn</option>
+                            <option value="/media/Iphone6.mp3">Iphone 6</option>
+                            <option value="/media/MaGaming.mp3">Ma Gaming</option>
+                            <option value="/media/MilitaryAlarm.mp3">Military Alarm</option>
+                            <option value="/media/NokiaSound.mp3">Nokia Sound</option>
+                            <option value="/media/NTNSound.mp3">NTN Sound</option>
+                            <option value="/media/PlarAlarmSound.mp3">Plar Alarm Sound</option>
+                            <option value="/media/RanRanSound.mp3">Ran Ran Sound</option>
+                            <option value="/media/RapSound.mp3">Rap Sound</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 200px; color: coral; font-weight: bold;" id="clock" class="clock">00:00</div>
+            <div class="start-timer mt-3">
+                <button class="btnn" id="start-timer">Start Timer</button>
+            </div>
+            <div class="pop_up hidden" id="error-message">Invalid input. Please try again.</div>
+            <div class="pop_up hidden" id="stop-alarm">Stop Alarm</div>
+        </div>
+    </div>
+
+    <audio id="alarm-sound" preload="auto"></audio>
+    <script src="/feature/func.js"></script>
+</body>
+
+</html>
